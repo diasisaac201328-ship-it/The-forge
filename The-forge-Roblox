@@ -1,0 +1,63 @@
+local player = game.Players.LocalPlayer
+
+-- Criar GUI
+local screenGui = Instance.new("ScreenGui")
+screenGui.Parent = player:WaitForChild("PlayerGui")
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 250, 0, 180)
+frame.Position = UDim2.new(0.5, -125, 0.5, -90)
+frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+frame.Parent = screenGui
+
+local title = Instance.new("TextLabel")
+title.Size = UDim2.new(1, 0, 0, 40)
+title.Text = "Menu The Forge"
+title.TextColor3 = Color3.new(1,1,1)
+title.BackgroundTransparency = 1
+title.Parent = frame
+
+-- Variáveis
+local autoForge = false
+local autoFarm = false
+local money = 0
+
+-- Botão Forja
+local forgeButton = Instance.new("TextButton")
+forgeButton.Size = UDim2.new(0.8, 0, 0, 40)
+forgeButton.Position = UDim2.new(0.1, 0, 0.3, 0)
+forgeButton.Text = "Forja Automática: OFF"
+forgeButton.Parent = frame
+
+forgeButton.MouseButton1Click:Connect(function()
+	autoForge = not autoForge
+	forgeButton.Text = "Forja Automática: " .. (autoForge and "ON" or "OFF")
+end)
+
+-- Botão Farm
+local farmButton = Instance.new("TextButton")
+farmButton.Size = UDim2.new(0.8, 0, 0, 40)
+farmButton.Position = UDim2.new(0.1, 0, 0.6, 0)
+farmButton.Text = "Farm Dinheiro: OFF"
+farmButton.Parent = frame
+
+farmButton.MouseButton1Click:Connect(function()
+	autoFarm = not autoFarm
+	farmButton.Text = "Farm Dinheiro: " .. (autoFarm and "ON" or "OFF")
+end)
+
+-- Sistema automático
+task.spawn(function()
+	while true do
+		task.wait(2)
+		
+		if autoForge then
+			print("Forjando item automaticamente...")
+		end
+		
+		if autoFarm then
+			money += 10
+			print("Dinheiro atual: "..money)
+		end
+	end
+end)
